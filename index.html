@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário de Perfil Comportamental</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+            display: none;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Questionário de Perfil Comportamental</h2>
+        <form id="questionario">
+            <div class="question" id="q1">
+                <p>1. Quando surge um problema inesperado no seu dia a dia, qual sua primeira reação?</p>
+                <input type="radio" name="q1" value="A" onclick="mostrarProximaPergunta('q2')"> (A) Busco uma solução rapidamente e resolvo o problema sem hesitação.<br>
+                <input type="radio" name="q1" value="B" onclick="mostrarProximaPergunta('q2')"> (B) Peço opiniões para encontrar a melhor solução junto com outras pessoas.<br>
+                <input type="radio" name="q1" value="C" onclick="mostrarProximaPergunta('q2')"> (C) Analiso o problema cuidadosamente antes de agir.<br>
+                <input type="radio" name="q1" value="D" onclick="mostrarProximaPergunta('q2')"> (D) Tento manter a calma e evito decisões precipitadas.<br>
+            </div>
+            
+            <div class="question" id="q2">
+                <p>2. Como você costuma organizar suas tarefas diárias?</p>
+                <input type="radio" name="q2" value="A" onclick="mostrarProximaPergunta('q3')"> (A) Faço as coisas conforme surgem, priorizando o que é mais urgente.<br>
+                <input type="radio" name="q2" value="B" onclick="mostrarProximaPergunta('q3')"> (B) Faço uma lista, mas sou flexível e gosto de mudanças no planejamento.<br>
+                <input type="radio" name="q2" value="C" onclick="mostrarProximaPergunta('q3')"> (C) Planejo tudo com antecedência e sigo um cronograma detalhado.<br>
+                <input type="radio" name="q2" value="D" onclick="mostrarProximaPergunta('q3')"> (D) Sigo uma rotina previsível e me sinto mais confortável quando tudo está organizado.<br>
+            </div>
+            
+            <div class="question" id="q3">
+                <p>3. Em uma discussão ou debate, qual sua postura mais comum?</p>
+                <input type="radio" name="q3" value="A" onclick="mostrarBotao()"> (A) Defendo minha opinião com firmeza e tento convencer os outros.<br>
+                <input type="radio" name="q3" value="B" onclick="mostrarBotao()"> (B) Gosto de conversar e expor meu ponto de vista de forma amigável.<br>
+                <input type="radio" name="q3" value="C" onclick="mostrarBotao()"> (C) Escuto os argumentos e só falo depois de ter certeza do que dizer.<br>
+                <input type="radio" name="q3" value="D" onclick="mostrarBotao()"> (D) Evito discussões e prefiro manter a harmonia.<br>
+            </div>
+            
+            <button id="botaoEnviar" type="button" onclick="calcularPerfil()" style="display: none;">Enviar</button>
+        </form>
+        <h3 id="resultado"></h3>
+    </div>
+
+    <script>
+        document.getElementById("q1").style.display = "block";
+
+        function mostrarProximaPergunta(proxima) {
+            document.getElementById(proxima).style.display = "block";
+        }
+        
+        function mostrarBotao() {
+            document.getElementById("botaoEnviar").style.display = "block";
+        }
+        
+        function calcularPerfil() {
+            let respostas = { A: 0, B: 0, C: 0, D: 0 };
+            let inputs = document.querySelectorAll('input[type="radio"]:checked');
+            inputs.forEach(input => respostas[input.value]++);
+            
+            let max = Math.max(respostas.A, respostas.B, respostas.C, respostas.D);
+            let perfil = Object.keys(respostas).find(key => respostas[key] === max);
+            
+            let descricao = {
+                A: "Dominante: Focado em resultados, assertivo e rápido na tomada de decisões.",
+                B: "Influente: Comunicativo, persuasivo e motivado por interações sociais.",
+                C: "Analítico: Organizado, detalhista e orientado a planejamento.",
+                D: "Estável: Paciente, confiável e busca harmonia no ambiente de trabalho."
+            };
+            
+            document.getElementById("resultado").innerText = "Seu perfil predominante é: " + descricao[perfil];
+        }
+    </script>
+</body>
+</html>
