@@ -54,55 +54,36 @@
                 <input type="radio" name="q1" value="D" onclick="mostrarProximaPergunta('q2')"> (D) Tento manter a calma e evito decisões precipitadas.<br>
             </div>
             
-            <div class="question" id="q2">
-                <p>2. Como você costuma organizar suas tarefas diárias?</p>
-                <input type="radio" name="q2" value="A" onclick="mostrarProximaPergunta('q3')"> (A) Faço as coisas conforme surgem, priorizando o que é mais urgente.<br>
-                <input type="radio" name="q2" value="B" onclick="mostrarProximaPergunta('q3')"> (B) Faço uma lista, mas sou flexível e gosto de mudanças no planejamento.<br>
-                <input type="radio" name="q2" value="C" onclick="mostrarProximaPergunta('q3')"> (C) Planejo tudo com antecedência e sigo um cronograma detalhado.<br>
-                <input type="radio" name="q2" value="D" onclick="mostrarProximaPergunta('q3')"> (D) Sigo uma rotina previsível e me sinto mais confortável quando tudo está organizado.<br>
-            </div>
-            
-            <div class="question" id="q3">
-                <p>3. Em uma discussão ou debate, qual sua postura mais comum?</p>
-                <input type="radio" name="q3" value="A" onclick="mostrarBotao()"> (A) Defendo minha opinião com firmeza e tento convencer os outros.<br>
-                <input type="radio" name="q3" value="B" onclick="mostrarBotao()"> (B) Gosto de conversar e expor meu ponto de vista de forma amigável.<br>
-                <input type="radio" name="q3" value="C" onclick="mostrarBotao()"> (C) Escuto os argumentos e só falo depois de ter certeza do que dizer.<br>
-                <input type="radio" name="q3" value="D" onclick="mostrarBotao()"> (D) Evito discussões e prefiro manter a harmonia.<br>
-            </div>
-            
-            <button id="botaoEnviar" type="button" onclick="calcularPerfil()" style="display: none;">Enviar</button>
+            <!-- Inserindo manualmente as perguntas com respostas corretas -->
+            <script>
+                let perguntas = [
+                    ["Como você costuma organizar suas tarefas diárias, tanto pessoais quanto profissionais?", "Faço as coisas conforme surgem, priorizando o que é mais urgente.", "Faço uma lista, mas sou flexível e gosto de mudanças no planejamento.", "Planejo tudo com antecedência e sigo um cronograma detalhado.", "Sigo uma rotina previsível e me sinto mais confortável quando tudo está organizado."],
+                    ["Em uma discussão ou debate, qual sua postura mais comum?", "Defendo minha opinião com firmeza e tento convencer os outros.", "Gosto de conversar e expor meu ponto de vista de forma amigável.", "Escuto os argumentos e só falo depois de ter certeza do que dizer.", "Evito discussões e prefiro manter a harmonia."],
+                    ["Como você se sente ao assumir novas responsabilidades na vida ou no trabalho?", "Gosto do desafio e me animo com a oportunidade de crescer.", "Fico empolgado, principalmente se envolver novas pessoas e interações.", "Prefiro entender bem todas as exigências antes de aceitar.", "Me sinto mais confortável quando tenho tempo para me adaptar às mudanças."],
+                    ["Como você lida com situações que envolvem riscos?", "Tomo a decisão com rapidez, sem medo de arriscar.", "Avalio as possibilidades, mas geralmente confio na minha intuição.", "Analiso todos os dados antes de decidir se vale a pena o risco.", "Evito riscos sempre que possível e prefiro caminhos mais seguros."],
+                    ["Como você se comporta em um ambiente cheio de mudanças?", "Me adapto rapidamente e busco aproveitar as oportunidades.", "Me animo e tento motivar os outros a aceitarem as mudanças.", "Preciso de tempo para entender as mudanças e processá-las antes de agir.", "Prefiro estabilidade e mudanças muito bruscas me deixam desconfortável."],
+                    ["Quando precisa tomar uma decisão importante, qual seu processo?", "Tomo a decisão com rapidez e confiança.", "Converso com outras pessoas e busco opiniões antes de decidir.", "Faço uma análise detalhada dos prós e contras antes de decidir.", "Penso bastante antes de agir e evito decisões impulsivas."],
+                    ["Se você precisa lidar com uma tarefa que nunca fez antes, como age?", "Aprendo na prática e começo a executar sem medo.", "Busco ajuda de alguém que já fez para aprender mais rápido.", "Pesquiso bastante antes de começar para evitar erros.", "Prefiro seguir um passo a passo bem estruturado para não me perder."],
+                    ["Como você costuma reagir a críticas?", "Vejo como uma oportunidade de melhorar e sigo em frente.", "Tento entender a crítica e busco conversar sobre ela.", "Fico reflexivo e analiso se a crítica faz sentido.", "Posso ficar desconfortável, mas levo em consideração."],
+                    ["O que mais te motiva no dia a dia?", "Superar desafios e alcançar resultados.", "Ter interações sociais e aprender coisas novas.", "Resolver problemas de forma estratégica e organizada.", "Ter estabilidade e um ambiente tranquilo."],
+                    ["Se alguém precisa de ajuda para resolver um problema, como você age?", "Ofereço uma solução direta e prática.", "Converso e tento encontrar uma solução juntos.", "Analiso o problema antes de dar uma sugestão.", "Dou apoio emocional e tento ajudar da forma mais tranquila possível."],
+                    ["Como você lida com prazos curtos e muita demanda de trabalho?", "Trabalho sob pressão e priorizo o que precisa ser feito rapidamente.", "Tento dividir a demanda com outras pessoas e manter um ambiente leve.", "Organizo tudo para evitar erros e garantir qualidade.", "Prefiro trabalhar em um ritmo mais equilibrado e sem pressões excessivas."],
+                    ["O que mais te incomoda em outras pessoas no ambiente de trabalho ou na vida?", "Lentidão e falta de iniciativa.", "Pessoas negativas que não sabem interagir bem.", "Falta de organização e desatenção a detalhes.", "Conflitos desnecessários e falta de harmonia."],
+                ];
+
+                let container = document.getElementById("questionario");
+                for (let i = 2; i <= 15; i++) {
+                    let div = document.createElement("div");
+                    div.classList.add("question");
+                    div.id = "q" + i;
+                    div.innerHTML = `<p>${i}. ${perguntas[i - 2][0]}</p>`;
+                    for (let j = 1; j <= 4; j++) {
+                        div.innerHTML += `<input type="radio" name="q${i}" value="${String.fromCharCode(64 + j)}" onclick="mostrarProximaPergunta('q${i + 1}')"> (${String.fromCharCode(64 + j)}) ${perguntas[i - 2][j]}<br>`;
+                    }
+                    container.appendChild(div);
+                }
+            </script>
         </form>
-        <h3 id="resultado"></h3>
     </div>
-
-    <script>
-        document.getElementById("q1").style.display = "block";
-
-        function mostrarProximaPergunta(proxima) {
-            document.getElementById(proxima).style.display = "block";
-        }
-        
-        function mostrarBotao() {
-            document.getElementById("botaoEnviar").style.display = "block";
-        }
-        
-        function calcularPerfil() {
-            let respostas = { A: 0, B: 0, C: 0, D: 0 };
-            let inputs = document.querySelectorAll('input[type="radio"]:checked');
-            inputs.forEach(input => respostas[input.value]++);
-            
-            let max = Math.max(respostas.A, respostas.B, respostas.C, respostas.D);
-            let perfil = Object.keys(respostas).find(key => respostas[key] === max);
-            
-            let descricao = {
-                A: "Dominante: Focado em resultados, assertivo e rápido na tomada de decisões.",
-                B: "Influente: Comunicativo, persuasivo e motivado por interações sociais.",
-                C: "Analítico: Organizado, detalhista e orientado a planejamento.",
-                D: "Estável: Paciente, confiável e busca harmonia no ambiente de trabalho."
-            };
-            
-            document.getElementById("resultado").innerText = "Seu perfil predominante é: " + descricao[perfil];
-        }
-    </script>
 </body>
 </html>
